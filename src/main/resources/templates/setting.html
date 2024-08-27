@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운동 설정</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/styles/setting.css}">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <ul>
+                <div>
+                    <li><a th:href="@{/main}" class="SmartFit">SmartFit</a></li>
+                </div>
+                <div class="navbar">
+                    <li><a th:href="@{#}">Logout</a></li>
+                    <li><a th:href="@{/aboutUs}">About Us</a></li>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <section class="exercise-selection">
+            <h2>운동 선택</h2>
+            <form th:action="@{/exerciseResult}" method="post">
+            <select id="exercise1" name="exercise1">
+                    <option th:each="exercise : ${exercises}"
+                            th:value="${exercise.fitId}"
+                            th:text="${exercise.name}"></option>
+                </select>
+                <!-- <div class="exercise-image">
+                    <img id="exerciseImage" th:src="@{/images/squat.jpg}" alt="스쿼트 예시">
+                </div> -->
+
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                    <label for="reps">횟수</label>
+                    <input type="number" id="reps" name="reps" min="1">
+                </div>
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between;">
+                    <label for="sets">세트 수</label>
+                    <input type="number" id="sets" name="sets" min="1">
+                </div>
+                <button type="submit" class="btn">설정</button>
+            </form>
+        </section>
+    </div>
+
+    <script th:inline="javascript">
+        function updateImage() {
+            const exercise = document.getElementById('exercise').value;
+            const image = document.getElementById('exerciseImage');
+            switch (exercise) {
+                case 'squat':
+                    image.src = /*[[@{/images/squat.jpg}]]*/ 'images/squat.jpg';
+                    image.alt = '스쿼트 예시';
+                    break;
+                case 'pullup':
+                    image.src = /*[[@{/images/pullup.jpg}]]*/ 'images/pullup.jpg';
+                    image.alt = '풀업 예시';
+                    break;
+                case 'pushup':
+                    image.src = /*[[@{/images/pushup.jpg}]]*/ 'images/pushup.jpg';
+                    image.alt = '푸쉬업 예시';
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>
